@@ -38,7 +38,7 @@ public class MovieServlet extends HttpServlet {
 		// change this to your own mysql username and password
 		String loginUser = "test";
 		String loginPasswd = "";
-		String loginUrl = "jdbc:mysql://18.221.130.90:3306/moviedb";
+		String loginUrl = "jdbc:mysql://13.58.57.202:3306/moviedb";
 		
 		// set response mime type
         response.setContentType("text/html");
@@ -66,7 +66,7 @@ public class MovieServlet extends HttpServlet {
 	    		ResultSet resultSet = statement.executeQuery(query);
 	
 	    		out.println("<body>");
-	    		out.println("<h1>Top 20 Rated Movies</h1>");
+	    		out.println("<h1>Movies List</h1>");
 	    		
 	    		out.println("<table border>");
 	    		
