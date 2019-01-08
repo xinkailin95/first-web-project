@@ -7,11 +7,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 /**
  * Servlet implementation class MovieServlet
@@ -19,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/MovieServlet")
 public class MovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Resource(name = "jdbc/movieDB")
+    private DataSource dataSource;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,7 +44,7 @@ public class MovieServlet extends HttpServlet {
 		String loginUser = "test";
 		String loginPasswd = "";
 		String loginUrl = "jdbc:mysql://13.58.57.202:3306/moviedb";
-		
+			
 		// set response mime type
         response.setContentType("text/html");
 		
@@ -52,7 +57,8 @@ public class MovieServlet extends HttpServlet {
         try {
 	    		Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    		// create database connection
-	    		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+//	    		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+	    		Connection connection = dataSource.getConnection();
 	    		// declare statement
 	    		Statement statement = connection.createStatement();
 	    		Statement statement1 = connection.createStatement();
