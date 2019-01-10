@@ -4,51 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Movie Movie</title>
-    <style>
-        * {
-        margin: 0;
-        padding: 0;
-    }
-
-    #login {
-        /*set high and width*/
-        width: 230px;
-        height: 100px;
-        /*center*/
-        margin: 100px auto;
-        /*background-color: red;*/
-        position: relative;
-    }
-    </style>
-    
+    <link rel="stylesheet" href="css/login.css" type="text/css">
 </head>
 
 <body>
-    <div id="login">
-        <h2>Login to Movie Movie</h2>
-        <br>
-        <!-- Set the method to POST to avoid username/password showing on URL
+    <div id="container">
+        <div id="login_box">
+            <h2>Login to Movie Movie</h2>
+            <br>
+            <!-- Set the method to POST to avoid username/password showing on URL
         Disable the default action because our JS function will handle it. -->
-        <form id="login_form" action="#" method="post">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter username" name="username">
+            <form id="login_form" action="#" method="post">
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter username" name="username">
+                <br>
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter password" name="password">
+                <br>
+                <input type="button" id="register" value="Register">
+                <input type="submit" value="Login">
+                <br>
+                <span style="color: red" id="login_span"></span>
+            </form>
+        </div>
+        <div id="register_box">
+            <h2>Register Here</h2>
             <br>
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter password" name="password">
-            <br>
-            <input type="button" value="Register">
-            <input type="submit" value="Login">
-            <br>
-            <span></span>
-        </form>
+            <form id="register_form" action="#" method="post">
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username">
+                <br>
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password">
+                <br>
+                <label for="re-password"><b>Password</b></label>
+                <input type="password" placeholder="Re-enter Password" name="re-password">
+                <br>
+                <input type="button" id="cancel" value="Cancel">
+                <input type="submit" value="Register">
+                <br>
+                <span style="color: red" id="register_span"></span>
+            </form>
+        </div>
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/login.js"></script>
     <script>
-        console.log("username: iamusername");
-        console.log("password: iampassword");
-        // test();
+    console.log("username: iamusername");
+    console.log("password: iampassword");
+
+    register.onclick = register_button;
+    cancel.onclick = login_button;
+
+    // test_login();
+    // test_register();
     </script>
 </body>
 

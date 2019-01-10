@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#container{
+    width: 250px;
+    /*login    h-130
+      register h-150
+    */
+    height: 130px;
+    border: 1px solid;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #000;
+    margin: 100px auto;
+    position: relative;
+}
+#login_box {
+    /*set high and width*/
+    width: 230px;
+    height: 110px;
+    /*background-color: red;*/
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: block;
+}
+#register_box {
+    width: 230px;
+    height: 130px;
+    /*background-color: yellow;*/
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: none;
+}
