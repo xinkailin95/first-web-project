@@ -18,25 +18,122 @@
             </div>
             <form class="navbar-form navbar-left" action="index.html" method="post">
                 <div class="form-group">
-                	<!-- search is the parameter -->
-                    <input type="text" class="form-control" placeholder="Find Movie, Stars ..." name="search"> 
+                    <!-- search is the parameter -->
+                    <input type="text" class="form-control" placeholder="Find Movie, Stars ..." name="search">
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default">Search</button>
             </form>
             <button class="btn btn-danger navbar-btn">Advance Search</button>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="index.html"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="#">Checkout</a></li>
             </ul>
         </div>
     </nav>
-    <div class="container">
-        <h3>Top 20 Rates Movies</h3>
-        <p>The .navbar-right class is used to right-align navigation bar buttons.</p>
+    <div class="container" style="position: relative;">
+        <h3>Top 20 Rated Movies</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Director</th>
+                    <th>Genres</th>
+                    <th>Stars</th>
+                    <th>Ratings</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="#" style="text-decoration: none;">John</a></td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                    <td>john@example.com</td>
+                    <td>john@example.com</td>
+                    <td>john@example.com</td>
+                </tr>
+                <tr>
+                    <td>Mary</td>
+                    <td>Moe</td>
+                    <td>mary@example.com</td>
+                    <td>adsd</td>
+                    <td>aad</td>
+                    <td>adsad</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+                <tr>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                    <td>July</td>
+                    <td>Dooley</td>
+                    <td>july@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="buttom" style="position:absolute; left: 48%;">
+            <a href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
+            <a href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
+        </div>
     </div>
     <script src="js/main.js"></script>
     <script>
     // document.getElementById('idname') work as same as $(#idname);
-
     </script>
 </body>
 
