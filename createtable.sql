@@ -32,8 +32,15 @@ create table genres_in_movies(
     movieId varchar(10) not null REFERENCES movies(id)
 );
 
+create table user{
+	id int primary key not null AUTO_INCREMENT,
+	username varchar(12) not null,
+	password varchar(20) not null
+};
+
 create table customers(
 	id int primary key not null AUTO_INCREMENT,
+	username varchar(12) not null REFERENCES user(username),
     firstName varchar(50) not null,
     lastName varchar(50) not null,
     ccId varchar(20) not null REFERENCES creditcards(id),
