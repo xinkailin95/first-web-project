@@ -86,6 +86,6 @@ $("#search_form").submit(function(event) {
         $("#paging").hide();
         $("#table_body").html("");
     } else { // do search
-        search("20");
+        search("0");
     }
 });
