@@ -31,8 +31,11 @@ $.post("api/main", function(data) {
 function search(pageNum) {
     $.post("api/main", { paging: pageNum}, function(data) {
         // alert(data["status"]);
-        $("#paging").show();
 		$("#display-header").html("Result for '" + $("#search_form input[name=search]").val() + "'.");
+		// only records greater than 20 to show the prev and next button
+		if(date.length > 20){
+			$("#paging").show();
+		}
 		
         let tBody = $("#table_body");
         // clean tBody when recevied new records

@@ -57,7 +57,7 @@ public class SearchServlet extends HttpServlet {
 
 		try {
 			conn = dataSource.getConnection();
-			String query = "SELECT * FROM ratings ORDER BY rating DESC LIMIT ? OFFSET ?";
+			String query = "SELECT * FROM movies ORDER BY rating DESC LIMIT ? OFFSET ?";
 			stmt = conn.prepareStatement(query);
 			stmt.setInt(1, 20); // for later use if apply for different page
 			stmt.setInt(2, paging);
