@@ -42,14 +42,15 @@ public class SearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int paging = Integer.parseInt(request.getParameter("paging"));
+		String like = request.getParameter("like");
+//		String limit = request.getParameter("limit");
 
 		PrintWriter out = response.getWriter();
 
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		Statement stmt1 = null;
-		Statement stmt2 = null;
+		Statement stmt2 = null;	
 		Statement stmt3 = null;
 		Statement stmt4 = null;
 		Statement stmt5 = null;
@@ -57,35 +58,28 @@ public class SearchServlet extends HttpServlet {
 
 		try {
 			conn = dataSource.getConnection();
-			String query = "SELECT * FROM movies ORDER BY rating DESC LIMIT ? OFFSET ?";
-			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, 20); // for later use if apply for different page
-			stmt.setInt(2, paging);
+			// limit to 60 in case the data too big
+			String query = "SELECT * FROM movies WHERE title LIKE '"+like+"%' ORDER BY title limit 60";
+//			String query = "SELECT * FROM movies WHERE title LIKE 'a%' ORDER BY title limit ?, 20";
 			
+			stmt = conn.createStatement();
 			stmt1 = conn.createStatement();
     		stmt2 = conn.createStatement();
     		stmt3 = conn.createStatement();
     		stmt4 = conn.createStatement();
     		stmt5 = conn.createStatement();
     		
-			rs = stmt.executeQuery();
+			rs = stmt.executeQuery(query);
 
 			JsonArray jsonArray = new JsonArray();
 			
 			while (rs.next()) {
-				String movieId = rs.getString("movieId");
-				ResultSet movies = stmt1.executeQuery("SELECT * from movies where id='"+movieId+"'");
-    			ResultSet genres_in_movies = stmt3.executeQuery("SELECT * from genres_in_movies where movieId='"+movieId+"'");
-    			ResultSet stars_in_movies = stmt5.executeQuery("SELECT * from stars_in_movies where movieId='"+movieId+"'");
-    			String starId = "";
-    			if(stars_in_movies.next()) {
-    				starId = stars_in_movies.getString("starId");
-    			}
-    			ResultSet stars = stmt4.executeQuery("SELECT * from stars where id='"+starId+"'");
-    			String starName = "";
-    			if(stars.next()) {
-    				starName = stars.getString("name");
-    			}
+				String movieId = rs.getString("id");
+				String movieTitle = rs.getString("title");
+				int movieYear = rs.getInt("year");
+				String movieDirector = rs.getString("director");
+				
+    			ResultSet genres_in_movies = stmt1.executeQuery("SELECT * from genres_in_movies where movieId='"+movieId+"'");
     			int genreId = 0;
     			if(genres_in_movies.next()) {
     				genreId = genres_in_movies.getInt("genreId");
@@ -95,15 +89,23 @@ public class SearchServlet extends HttpServlet {
     			if(genres.next()) {
     				genreName = genres.getString("name");
     			}
-    			String movieTitle = "";
-    			int movieYear = 0;
-    			String movieDirector = "";
-    			if(movies.next()) {
-    				movieTitle = movies.getString("title");
-    				movieYear = movies.getInt("year");
-    				movieDirector = movies.getString("director");
+    			
+    			ResultSet stars_in_movies = stmt3.executeQuery("SELECT * from stars_in_movies where movieId='"+movieId+"'");
+    			String starId = "";
+    			if(stars_in_movies.next()) {
+    				starId = stars_in_movies.getString("starId");
     			}
-    			float rating = rs.getFloat("rating");
+    			ResultSet stars = stmt4.executeQuery("SELECT * from stars where id='"+starId+"'");
+    			String starName = "";
+    			if(stars.next()) {
+    				starName = stars.getString("name");
+    			}
+    			
+    			ResultSet ratings = stmt5.executeQuery("SELECT * from ratings where movieId='"+movieId+"'");
+				float rating = 0;
+				if(ratings.next()) {
+					rating = ratings.getFloat("rating");
+				}
 
 				JsonObject jsonObject = new JsonObject();
 				jsonObject.addProperty("title", movieTitle);
@@ -114,11 +116,11 @@ public class SearchServlet extends HttpServlet {
 				jsonObject.addProperty("ratings", rating);
 				jsonArray.add(jsonObject);
 				
-				movies.close();
+				ratings.close();
+				stars.close();
+				stars_in_movies.close();
     			genres.close();
     			genres_in_movies.close();
-    			stars.close();
-    			stars_in_movies.close();
 			}
 			out.write(jsonArray.toString());
 		} catch (Exception e) {

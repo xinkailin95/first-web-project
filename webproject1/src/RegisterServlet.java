@@ -44,7 +44,6 @@ public class RegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Retrieve parameter username and password from url request.
-		// MUST!! get all the Parameters
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String re_password = request.getParameter("re-password");
