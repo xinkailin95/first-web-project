@@ -55,9 +55,9 @@ public class MovieServlet extends HttpServlet {
         out.println("<head><title>Fabflix</title></head>");
         
         try {
-	    		Class.forName("com.mysql.jdbc.Driver").newInstance();
+	    		// Class.forName("com.mysql.jdbc.Driver").newInstance();
 	    		// create database connection
-//	    		Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
+	    		// Connection connection = DriverManager.getConnection(loginUrl, loginUser, loginPasswd);
 	    		Connection connection = dataSource.getConnection();
 	    		// declare statement
 	    		Statement statement = connection.createStatement();
