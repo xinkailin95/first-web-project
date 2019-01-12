@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
-    	#paging{
-    		display: none;
-    	}
-    </style>
+        #paging{
+			display: none;
+		}
+	</style>
 </head>
 
 <body>
@@ -50,19 +50,40 @@
         </table>
         <!-- set paging to be display none, if the return data length greater than 20, then display block -->
         <div id="paging" style="position:absolute; left: 48%; top: 100%;">
-            <a href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
-            <a href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
+            <a id="left-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
+            <a id="right-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-    <!-- for test -->
+    <script src="js/search.js"></script>
     <script>
-    	// $("#search_form").submit(function(event) {
-    	// 	event.preventDefault();
-    	// 	alert($("#search_form input[name=search]").val());
-    	// });
+    // show to default top 20 rated movies
+    $.post("api/main", function(data) {
+        //     alert("hello");
+        let tBody = $("#table_body");
+        for (let i = 0; i < data.length; i++) {
+            // Concatenate the html tags with resultData jsonObject
+            let rowHTML = ""
+            rowHTML += "<tr>";
+            rowHTML +=
+                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["title"] + '</a>' + "</td>";
+            rowHTML +=
+                "<td>" + data[i]["year"] + "</td>";
+            rowHTML +=
+                "<td>" + data[i]["director"] + "</td>";
+            rowHTML +=
+                "<td>" + data[i]["genres"] + "</td>";
+            rowHTML +=
+                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["stars"] + '</a>' + "</td>";
+            rowHTML +=
+                "<td>" + data[i]["ratings"] + "</td>";
+            rowHTML += "</tr>";
+
+            // Append the row created to the table body, which will refresh the page
+            tBody.append(rowHTML);
+        }
+    }, "json");
     </script>
 </body>
 
