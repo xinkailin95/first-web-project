@@ -51,7 +51,7 @@ public class MainServlet extends HttpServlet {
 		Statement stmt1 = null;
 		Statement stmt2 = null;
 		Statement stmt3 = null;
-		Statement stmt4 = null;
+//		Statement stmt4 = null;
 		Statement stmt5 = null;
 		ResultSet rs = null;
 
@@ -65,7 +65,7 @@ public class MainServlet extends HttpServlet {
 			stmt1 = conn.createStatement();
     		stmt2 = conn.createStatement();
     		stmt3 = conn.createStatement();
-    		stmt4 = conn.createStatement();
+//    		stmt4 = conn.createStatement();
     		stmt5 = conn.createStatement();
     		
 			rs = stmt.executeQuery();
@@ -81,11 +81,11 @@ public class MainServlet extends HttpServlet {
     			if(stars_in_movies.next()) {
     				starId = stars_in_movies.getString("starId");
     			}
-    			ResultSet stars = stmt4.executeQuery("SELECT * from stars where id='"+starId+"'");
-    			String starName = "";
-    			if(stars.next()) {
-    				starName = stars.getString("name");
-    			}
+//    			ResultSet stars = stmt4.executeQuery("SELECT * from stars where id='"+starId+"'");
+//    			String starName = "";
+//    			if(stars.next()) {
+//    				starName = stars.getString("name");
+//    			}
     			int genreId = 0;
     			if(genres_in_movies.next()) {
     				genreId = genres_in_movies.getInt("genreId");
@@ -106,18 +106,18 @@ public class MainServlet extends HttpServlet {
     			float rating = rs.getFloat("rating");
 
 				JsonObject jsonObject = new JsonObject();
+				jsonObject.addProperty("id", movieId);
 				jsonObject.addProperty("title", movieTitle);
 				jsonObject.addProperty("year", movieYear);
 				jsonObject.addProperty("director", movieDirector);
 				jsonObject.addProperty("genres", genreName);
-				jsonObject.addProperty("stars", starName);
 				jsonObject.addProperty("ratings", rating);
 				jsonArray.add(jsonObject);
 				
 				movies.close();
     			genres.close();
     			genres_in_movies.close();
-    			stars.close();
+//    			stars.close();
     			stars_in_movies.close();
 			}
 			out.write(jsonArray.toString());
@@ -158,12 +158,12 @@ public class MainServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			try {
-				if (stmt4 != null)
-					stmt4.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				if (stmt4 != null)
+//					stmt4.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			try {
 				if (stmt5 != null)
 					stmt5.close();

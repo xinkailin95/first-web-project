@@ -6,6 +6,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        #content{
+            border-top: groove;
+            border-width: 2px;
+        }
+        #advance-search-form{
+            margin-top: 20px;
+            height: 350px;
+            width: 350px;
+            /*background-color: red;*/
+        }
+        #after-search, #warning{
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,71 +29,135 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="main.html">Welcome To Movie Movie</a>
             </div>
-            <form class="navbar-form navbar-left" action="index.html" method="post">
+            <form id="search_form" class="navbar-form navbar-left" action="index.html" method="post">
                 <div class="form-group">
                     <!-- search is the parameter -->
-                    <input type="text" class="form-control" placeholder="Find Movie, Stars ..." name="search">
+                    <input type="text" class="form-control" placeholder="Find Movies ..." name="search">
                 </div>
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
-            <button class="btn btn-danger navbar-btn">Advance Search</button>
+            <button class="btn btn-danger navbar-btn" onclick="window.location.replace('advance-search.html')">Advance Search</button>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                <li><a href="#">Checkout</a></li>
+                <li><a href="checkout.html">Checkout</a></li>
             </ul>
         </div>
     </nav>
     <div class="container" style="position: relative;">
-        <h3>Top 20 Rated Movies</h3>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>Director</th>
-                    <th>Genres</th>
-                    <th>Stars</th>
-                    <th>Ratings</th>
-                </tr>
-            </thead>
-            <tbody id="table_body"></tbody>
-        </table>
-        <div id="paging" style="position:absolute; left: 48%; top: 100%;">
-            <a href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
-            <a href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
+        <div id="before-search" class="container" style="position: absolute;">
+            <h2>Advance Search</h2>
+            <div id="content">
+                <form id="advance-search-form">
+                    <div class="input-group">
+                        <h3>Title, Star or Director</h3>
+                        <input type="text" class="form-control" placeholder="Enter Key words ..." name="adv-search">
+                        <label class="radio-inline"><input type="radio" name="optradio" value="title" checked>Title</label>
+                        <label class="radio-inline"><input type="radio" name="optradio" value="star">Star</label>
+                        <label class="radio-inline"><input type="radio" name="optradio" value="director">Director</label>
+                    </div>
+                    <h3>Genres:</h3>
+                    <div class="checkbox">
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Action">Action</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Adult">Adult</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Adventure">Adventure</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Animation">Animation</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Biograph">Biography</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Comedy">Comedy</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Crime">Crime</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Documentary">Documentary</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Drama">Drama</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Family">Family</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Fantasy">Fantasy</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="History">History</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Horror">Horror</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Musci">Music</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Musical">Musical</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Mystery">Mystery</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Reality-TV">Reality-TV</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Romance">Romance</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Sic-Fi">Sic-Fi</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Sport">Sport</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Thriller">Thriller</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="War">War</label>
+                        <label class="col-sm-4"><input type="checkbox" name="genres" value="Western">Western</label>
+                        <label class="col-sm-4"></label>
+                    </div>
+                    <div style="position: absolute; top: 111%">
+                        <button type="submit" class="btn btn-info">Search</button>
+                        <div id="warning" class="alert alert-danger" style="margin-top: 10px;">
+                            <strong>Warning!</strong> Enter movie title, star name or director name to search.
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="after-search" class="container" style="position: relative;">
+            <h2 id="display-header"></h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Director</th>
+                        <th>Genre</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody id="table_body"></tbody>
+            </table>
+            <!-- set paging to be display none, if the return data length greater than 20, then display block -->
+            <div id="paging" style="position:absolute; left: 48%; top: 100%;">
+                <a id="left-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
+                <a id="right-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
+            </div>
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- <script>
-    $.post("api/main", { paging: "0" }, function(data) {
-        // alert(data["status"]);
-        let tBody = $("#table_body");
-        for (let i = 0; i < data.length; i++) {
-            // Concatenate the html tags with resultData jsonObject
-            let rowHTML = "";
-            rowHTML += "<tr>";
-            rowHTML +=
-                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["title"] + '</a>' + "</td>";
-            rowHTML +=
-                "<td>" + data[i]["year"] + "</td>";
-            rowHTML +=
-                "<td>" + data[i]["director"] + "</td>";
-            rowHTML +=
-                "<td>" + data[i]["genres"] + "</td>";
-            rowHTML +=
-                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["stars"] + '</a>' + "</td>";
-            rowHTML +=
-                "<td>" + data[i]["ratings"] + "</td>";
-            rowHTML += "</tr>";
+    <script src="js/search.js"></script>
+    <script>
+    // when search submit call search() to show the result
+    $("#search_form").submit(function(event) {
+        event.preventDefault();
+        $("#before-search").hide();
+        $("#after-search").show();
+        var a_search = $("#search_form input[name=search]").val();
+        reg_search(a_search);
+    });
 
-            // Append the row created to the table body, which will refresh the page
-            tBody.append(rowHTML);
+    var genres = document.getElementsByName("genres");
+    var types = document.getElementsByName("optradio");
+    $("#advance-search-form").submit(function(event) {
+        event.preventDefault();
+        let str = "";
+        for (let i = 0; i < genres.length; i++) {
+            if (genres[i].checked) {
+                str += genres[i].value + " ";
+                // alert(genres[i].value);
+            }
         }
-    }, "json");
-
+        let type = "";
+        for (let i = 0; i < types.length; i++) {
+            if (types[i].checked) {
+                type = types[i].value;
+            }
+        }
+        if (str === "") { str = "*"; }
+        // alert(str);
+        var adv_search = $("#advance-search-form input[name=adv-search]").val();
+        if (adv_search === "") { // the search bar is empty
+            $("#warning").show();
+            $("#paging").hide();
+            $("#table_body").html("");
+        } else { // do search
+            $("#warning").hide();
+            $("#before-search").hide();
+            $("#after-search").show();
+            do_search(adv_search, str, type);
+        }
+    });
     </script>
-    <script src="js/search.js"></script> -->
 </body>
 
 </html>
