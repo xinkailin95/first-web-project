@@ -17,7 +17,7 @@
             width: 350px;
             /*background-color: red;*/
         }
-        #after-search, #warning, #paging{
+        #after-search, #warning, #paging, #singleMovie, #singleStar{
             display: none;
         }
 /*        #before-search{
@@ -42,7 +42,7 @@
             <button class="btn btn-danger navbar-btn" onclick="window.location.replace('advance-search.html')">Advance Search</button>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
+                <!-- <li><a href="checkout.html">Checkout</a></li> -->
             </ul>
         </div>
     </nav>
@@ -114,6 +114,7 @@
             </div>
         </div>
         <div id="singleMovie" class="container" style="position: absolute;"></div>
+        <div id="singleStar" class="container" style="position: absolute;"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -124,6 +125,7 @@
         event.preventDefault();
         $("#before-search").hide();
         $("#singleMovie").hide();
+        $("#singleStar").hide();
         $("#after-search").show();
         var a_search = $("#search_form input[name=search]").val();
         reg_search(a_search);

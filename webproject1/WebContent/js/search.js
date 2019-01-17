@@ -44,43 +44,11 @@ function printTitle(pageNum, data) {
             $("#default-movies").hide && $("#default-movies").hide();
             $("#before-search").hide && $("#before-search").hide();
             $("#after-search").hide && $("#after-search").hide();
+            $("#singleStar").hide && $("#singleStar").hide();
             $("#singleMovie").show();
             singleMovie(data);
         });
     });
-}
-
-// print data to the page for searching for star
-function printStar(pageNum, data) {
-    if (data.length > 20) {
-        $("#paging").show();
-    } else {
-        $("#paging").hide();
-    }
-    let tBody = $("#table_body");
-    // clean tBody when recevied new records
-    tBody.html("");
-    for (let i = pageNum; i < Math.min(pageNum + 20, jsonData.length); i++) {
-        // Concatenate the html tags with resultData jsonObject
-        let rowHTML = "";
-        rowHTML += "<tr>";
-        rowHTML +=
-            "<td>" + data[i]["id"] + '</a>' + "</td>";
-        rowHTML +=
-            "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["title"] + '</a>' + "</td>";
-        rowHTML +=
-            "<td>" + data[i]["year"] + "</td>";
-        rowHTML +=
-            "<td>" + data[i]["director"] + "</td>";
-        rowHTML +=
-            "<td>" + data[i]["star"] + "</td>";
-        rowHTML +=
-            "<td>" + data[i]["ratings"] + "</td>";
-        rowHTML += "</tr>";
-
-        // Append the row created to the table body, which will refresh the page
-        tBody.append(rowHTML);
-    }
 }
 
 var page = 0;
@@ -116,12 +84,7 @@ function do_search(blurry, g_type, s_type) {
             $("#paging").hide();
             $("#table_body").html("");
         } else {
-            // $("#display-header").html("Result for '" + blurry + "'.");
-            if (s_type == "title") {
-                printTitle("0", data);
-            } else if (s_type == "star") {
-                printStar("0", data);
-            }
+            printTitle("0", data);
         }
     }, "json");
 }
@@ -152,4 +115,19 @@ function singleMovie(data) {
     divHTML += "<h3><span class='col-sm-2'>Director:</span>" + titleData["director"] + "</h3>";
     divHTML += "<h3><span class='col-sm-2'>Stars:</span>" + titleData["star"] + "</h3>";
     con.append(divHTML);
+
+    $("a[name=titles]").click(function(event) {
+        // $("#default-movies").hide();
+        // $("#singleMovie").show();
+        var searchStar = this.innerHTML;
+        $.post('api/star', { title: searchStar }, function(data) {
+            // alert(data);
+            singleStar(data);
+        });
+    });
+}
+
+function singleStar(data) {
+    alert("star");
+    alert(star);
 }

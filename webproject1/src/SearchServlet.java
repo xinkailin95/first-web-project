@@ -63,12 +63,7 @@ public class SearchServlet extends HttpServlet {
 				// for advance search
 				out.write(genresTitle(like, g_type).toString());
 			}
-		} else if (search_type.equals("star")) {
-			// for advance search 
-			out.write(stars(like, g_type).toString());
-		}else {
-			
-		}
+		} 
 		out.close();
 	}
 
@@ -197,70 +192,6 @@ public class SearchServlet extends HttpServlet {
 	}
 
 	private JsonArray genresTitle(String like, String g_type) {
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		JsonArray jsonArray = new JsonArray();
-
-		try {
-			conn = dataSource.getConnection();
-			// limit the search data to 60
-			String query = "SELECT m.id,m.title,m.year,m.director,g.name genres,r.rating FROM movies m,genres_in_movies gm,genres g,ratings r WHERE m.title LIKE '"
-					+ like + "%' AND m.id=gm.movieId AND gm.genreId=g.id AND (" + g_type
-					+ ") AND r.movieId=m.id LIMIT 60";
-//			String query = "SELECT * FROM movies WHERE title LIKE 'a%' ORDER BY title limit ?, 20";
-
-			stmt = conn.createStatement();
-
-			rs = stmt.executeQuery(query);
-
-			while (rs.next()) {
-				String movieId = rs.getString("id");
-				String movieTitle = rs.getString("title");
-				int movieYear = rs.getInt("year");
-				String movieDirector = rs.getString("director");
-				String genreName = rs.getString("genres");
-				float rating = rs.getFloat("rating");
-
-				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty("id", movieId);
-				jsonObject.addProperty("title", movieTitle);
-				jsonObject.addProperty("year", movieYear);
-				jsonObject.addProperty("director", movieDirector);
-				jsonObject.addProperty("genres", genreName);
-				jsonObject.addProperty("ratings", rating);
-				jsonArray.add(jsonObject);
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("message", e.getMessage());
-			jsonArray.add(jsonObject);
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return jsonArray;
-	}
-
-	private JsonArray stars(String like, String g_type) {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
