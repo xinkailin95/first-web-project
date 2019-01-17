@@ -17,9 +17,12 @@
             width: 350px;
             /*background-color: red;*/
         }
-        #after-search, #warning{
+        #after-search, #warning, #paging{
             display: none;
         }
+/*        #before-search{
+            display: none;
+        }*/
     </style>
 </head>
 
@@ -43,17 +46,15 @@
             </ul>
         </div>
     </nav>
-    <div class="container" style="position: relative;">
-        <div id="before-search" class="container" style="position: absolute;">
+    <div id="containers" class="container" style="position: relative;">
+        <div id="before-search" class="container" style="position: relative;">
             <h2>Advance Search</h2>
             <div id="content">
                 <form id="advance-search-form">
                     <div class="input-group">
-                        <h3>Title, Star or Director</h3>
+                        <h3>Title</h3>
                         <input type="text" class="form-control" placeholder="Enter Key words ..." name="adv-search">
-                        <label class="radio-inline"><input type="radio" name="optradio" value="title" checked>Title</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" value="star">Star</label>
-                        <label class="radio-inline"><input type="radio" name="optradio" value="director">Director</label>
+                        <span><i>e.g. Game of Thrones</i></span>
                     </div>
                     <h3>Genres:</h3>
                     <div class="checkbox">
@@ -96,7 +97,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Title</th>
                         <th>Year</th>
                         <th>Director</th>
@@ -112,6 +113,7 @@
                 <a id="right-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
             </div>
         </div>
+        <div id="singleMovie" class="container" style="position: absolute;"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -121,13 +123,14 @@
     $("#search_form").submit(function(event) {
         event.preventDefault();
         $("#before-search").hide();
+        $("#singleMovie").hide();
         $("#after-search").show();
         var a_search = $("#search_form input[name=search]").val();
         reg_search(a_search);
     });
 
     var genres = document.getElementsByName("genres");
-    var types = document.getElementsByName("optradio");
+    // var types = document.getElementsByName("optradio");
     $("#advance-search-form").submit(function(event) {
         event.preventDefault();
         let str = "";
@@ -135,12 +138,6 @@
             if (genres[i].checked) {
                 str += genres[i].value + " ";
                 // alert(genres[i].value);
-            }
-        }
-        let type = "";
-        for (let i = 0; i < types.length; i++) {
-            if (types[i].checked) {
-                type = types[i].value;
             }
         }
         if (str === "") { str = "*"; }
@@ -154,7 +151,7 @@
             $("#warning").hide();
             $("#before-search").hide();
             $("#after-search").show();
-            do_search(adv_search, str, type);
+            do_search(adv_search, str, "title");
         }
     });
     </script>

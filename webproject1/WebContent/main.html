@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
-        #paging{
+        #paging, #singleMovie{
 			display: none;
 		}
 	</style>
@@ -33,26 +33,29 @@
             </ul>
         </div>
     </nav>
-    <div class="container" style="position: relative;">
-        <h2 id="display-header">Top 20 Rated Movies</h2>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Year</th>
-                    <th>Director</th>
-                    <th>Genre</th>
-                    <th>Rating</th>
-                </tr>
-            </thead>
-            <tbody id="table_body"></tbody>
-        </table>
-        <!-- set paging to be display none, if the return data length greater than 20, then display block -->
-        <div id="paging" style="position:absolute; left: 48%; top: 100%;">
-            <a id="left-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
-            <a id="right-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
+    <div id="containers" class="container" style="position: relative;">
+        <div id="default-movies" class="container" style="position: absolute;">
+            <h2 id="display-header">Top 20 Rated Movies</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Director</th>
+                        <th>Genre</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody id="table_body"></tbody>
+            </table>
+            <!-- set paging to be display none, if the return data length greater than 20, then display block -->
+            <div id="paging" style="position:absolute; left: 48%; top: 100%;">
+                <a id="left-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-left"></span></a>
+                <a id="right-page" href="javascript:;"><span class="glyphicon glyphicon-triangle-right"></span></a>
+            </div>
         </div>
+        <div id="singleMovie" class="container" style="position: absolute;"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -69,13 +72,13 @@
             rowHTML +=
                 "<td>" + data[i]["id"] + '</a>' + "</td>";
             rowHTML +=
-                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["title"] + '</a>' + "</td>";
+                "<td>" + '<a name="titles" href="#" style="text-decoration: none;">' + data[i]["title"] + '</a>' + "</td>";
             rowHTML +=
                 "<td>" + data[i]["year"] + "</td>";
             rowHTML +=
-                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["director"] + "</td>";
+                "<td>" + data[i]["director"] + "</td>";
             rowHTML +=
-                "<td>" + '<a href="#" style="text-decoration: none;">' + data[i]["genres"] + "</td>";
+                "<td>" + data[i]["genres"] + "</td>";
             rowHTML +=
                 "<td>" + data[i]["ratings"] + "</td>";
             rowHTML += "</tr>";
@@ -83,12 +86,28 @@
             // Append the row created to the table body, which will refresh the page
             tBody.append(rowHTML);
         }
+        // if use it outside, there would be error on undefined of data
+        // var titles = document.getElementsByName("titles");
+        // // alert(titles[0].innerHTML);
+        // for (let i = 0; i < titles.length; i++) { // titles[i].onclick=function() { // alert(titles[i].innerHTML); // } // }
+        // jquery way for above line
+        $("a[name=titles]").click(function(event) {
+            $("#default-movies").hide();
+            $("#singleMovie").show();
+            var searchTitle = this.innerHTML;
+            $.post('api/movie', { title: searchTitle }, function(data) {
+            	// alert(data);
+                singleMovie(data);
+            });
+        });
     }, "json");
 
     // when search submit call search() to show the result
     $("#search_form").submit(function(event) {
         event.preventDefault();
         var r_search = $("#search_form input[name=search]").val();
+        $("#singleMovie").hide();
+        $("#default-movies").show();
         reg_search(r_search);
     });
     </script>
