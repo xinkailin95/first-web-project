@@ -116,18 +116,54 @@ function singleMovie(data) {
     divHTML += "<h3><span class='col-sm-2'>Stars:</span>" + titleData["star"] + "</h3>";
     con.append(divHTML);
 
-    $("a[name=titles]").click(function(event) {
+    $("a[name=stars]").click(function(event) {
         // $("#default-movies").hide();
         // $("#singleMovie").show();
         var searchStar = this.innerHTML;
-        $.post('api/star', { title: searchStar }, function(data) {
+        $.post('api/star', { star: searchStar }, function(data) {
             // alert(data);
+            $("#default-movies").hide && $("#default-movies").hide();
+            $("#before-search").hide && $("#before-search").hide();
+            $("#after-search").hide && $("#after-search").hide();
+            $("#singleMovie").hide && $("#singleMovie").hide();
+            $("#singleStar").show();
             singleStar(data);
         });
     });
 }
 
 function singleStar(data) {
-    alert("star");
-    alert(star);
+    data = JSON.parse(data);
+    // alert(data[0]);
+    $("#display-star").html(data[0]["star"] + " (" + data[0]["birthYear"] + ")");
+    let sBody = $("#star_body");
+    // clean tBody when recevied new records
+    sBody.html("");
+    for (let i = 0; i < Math.min(20, data.length); i++) {
+        // Concatenate the html tags with resultData jsonObject
+        let rowHTML = "";
+        rowHTML += "<tr>";
+        rowHTML +=
+            "<td>" + '<a name="titles" href="#" style="text-decoration: none;">' + data[i]["title"] + '</a>' + "</td>";
+        rowHTML +=
+            "<td>" + data[i]["year"] + "</td>";
+        rowHTML +=
+            "<td>" + data[i]["director"] + "</td>";
+        rowHTML += "</tr>";
+
+        // Append the row created to the table body, which will refresh the page
+        sBody.append(rowHTML);
+    }
+    $("a[name=titles]").click(function(event) {
+        // singleMovie.call(this);
+        var searchTitle = this.innerHTML;
+        $.post('api/movie', { title: searchTitle }, function(data) {
+            $("#default-movies").hide && $("#default-movies").hide();
+            $("#before-search").hide && $("#before-search").hide();
+            $("#after-search").hide && $("#after-search").hide();
+            $("#singleStar").hide && $("#singleStar").hide();
+            $("#singleMovie").show();
+            singleMovie(data);
+        });
+    });
 }

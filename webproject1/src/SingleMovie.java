@@ -48,7 +48,7 @@ public class singleMovie extends HttpServlet {
 		Statement stmt = null;
 		ResultSet rs = null;
 		JsonObject jsonObject = new JsonObject();
-		;
+		
 
 		try {
 			conn = dataSource.getConnection();
