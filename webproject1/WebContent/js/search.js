@@ -1,4 +1,4 @@
-// print data to the page for searching for title
+// print data to the page for searching for movie
 function printTitle(pageNum, data) {
     // alert(pageNum);
     // only records greater than 20 to show the prev and next button
@@ -10,7 +10,7 @@ function printTitle(pageNum, data) {
     let tBody = $("#table_body");
     // clean tBody when recevied new records
     tBody.html("");
-    for (let i = pageNum; i < Math.min(pageNum + 20, jsonData.length); i++) {
+    for (let i = pageNum; i < Math.min(pageNum + 20, data.length); i++) {
         // Concatenate the html tags with resultData jsonObject
         let rowHTML = "";
         rowHTML += "<tr>";
@@ -79,11 +79,12 @@ function do_search(blurry, g_type, s_type) {
         // alert(search);
         // alert(data[0]);
         window.jsonData = data;
+        $("#table_body").html("");
         if (data.length == 0) {
             $("#display-header").html("Result for '" + blurry + "' not found.");
             $("#paging").hide();
-            $("#table_body").html("");
         } else {
+            $("#display-header").html("Result for '" + blurry + "'.");
             printTitle("0", data);
         }
     }, "json");
@@ -166,4 +167,125 @@ function singleStar(data) {
             singleMovie(data);
         });
     });
+}
+
+var tFlag = false;
+var yFlag = false;
+var dFlag = false;
+var gFlag = false;
+var rFlag = false;
+// sort data in ascending or descending
+$("a[name=sort]").click(function(event) {
+    tFlag = !tFlag;
+    yFlag = !yFlag;
+    dFlag = !dFlag;
+    gFlag = !gFlag;
+    rFlag = !rFlag;
+    // alert(this.innerHTML);
+    var inner = this.innerHTML;
+    if (inner == "Title") {
+        sortData(window.jsonData, inner, tFlag);
+    } else if (inner == "Year") {
+        sortData(window.jsonData, inner, yFlag);
+    } else if (inner == "Director") {
+        sortData(window.jsonData, inner, dFlag);
+    } else if (inner == "Genre") {
+        sortData(window.jsonData, inner, gFlag);
+    } else if (inner == "Rating") {
+        sortData(window.jsonData, inner, rFlag);
+    }
+});
+
+function sortData(data, select, flag) {
+    if (select == "Title") {
+        if (flag) {
+            data.sort((a, b) => {
+                if (a.title === b.title) {
+                    return 0;
+                }
+                return (a.title < b.title) ? -1 : 1;
+            });
+            printTitle(page, data);
+        } else {
+            data.sort((a, b) => {
+                if (a.title === b.title) {
+                    return 0;
+                }
+                return (a.title < b.title) ? 1 : -1;
+            });
+            printTitle(page, data);
+        }
+    } else if (select == "Year") {
+        if (flag) {
+            data.sort((a, b) => {
+                if (a.year === b.year) {
+                    return 0;
+                }
+                return (a.year < b.year) ? -1 : 1;
+            });
+            printTitle(page, data);
+        } else {
+            data.sort((a, b) => {
+                if (a.year === b.year) {
+                    return 0;
+                }
+                return (a.year < b.year) ? 1 : -1;
+            });
+            printTitle(page, data);
+        }
+    } else if (select == "Director") {
+        if (flag) {
+            data.sort((a, b) => {
+                if (a.director === b.director) {
+                    return 0;
+                }
+                return (a.director < b.director) ? -1 : 1;
+            });
+            printTitle(page, data);
+        } else {
+            data.sort((a, b) => {
+                if (a.director === b.director) {
+                    return 0;
+                }
+                return (a.director < b.director) ? 1 : -1;
+            });
+            printTitle(page, data);
+        }
+    } else if (select == "Genre") {
+        if (flag) {
+            data.sort((a, b) => {
+                if (a.genres === b.genres) {
+                    return 0;
+                }
+                return (a.genres < b.genres) ? -1 : 1;
+            });
+            printTitle(page, data);
+        } else {
+            data.sort((a, b) => {
+                if (a.genres === b.genres) {
+                    return 0;
+                }
+                return (a.genres < b.genres) ? 1 : -1;
+            });
+            printTitle(page, data);
+        }
+    } else if (select == "Rating") {
+        if (flag) {
+            data.sort((a, b) => {
+                if (a.ratings === b.ratings) {
+                    return 0;
+                }
+                return (a.ratings < b.ratings) ? -1 : 1;
+            });
+            printTitle(page, data);
+        } else {
+            data.sort((a, b) => {
+                if (a.ratings === b.ratings) {
+                    return 0;
+                }
+                return (a.ratings < b.ratings) ? 1 : -1;
+            });
+            printTitle(page, data);
+        }
+    }
 }
