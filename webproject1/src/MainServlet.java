@@ -51,7 +51,6 @@ public class MainServlet extends HttpServlet {
 		Statement stmt1 = null;
 		Statement stmt2 = null;
 		Statement stmt3 = null;
-		Statement stmt5 = null;
 		ResultSet rs = null;
 
 		try {
@@ -64,7 +63,6 @@ public class MainServlet extends HttpServlet {
 			stmt1 = conn.createStatement();
     		stmt2 = conn.createStatement();
     		stmt3 = conn.createStatement();
-    		stmt5 = conn.createStatement();
     		
 			rs = stmt.executeQuery();
 
@@ -74,11 +72,6 @@ public class MainServlet extends HttpServlet {
 				String movieId = rs.getString("movieId");
 				ResultSet movies = stmt1.executeQuery("SELECT * from movies where id='"+movieId+"'");
     			ResultSet genres_in_movies = stmt3.executeQuery("SELECT * from genres_in_movies where movieId='"+movieId+"'");
-    			ResultSet stars_in_movies = stmt5.executeQuery("SELECT * from stars_in_movies where movieId='"+movieId+"'");
-    			String starId = "";
-    			if(stars_in_movies.next()) {
-    				starId = stars_in_movies.getString("starId");
-    			}
     			int genreId = 0;
     			if(genres_in_movies.next()) {
     				genreId = genres_in_movies.getInt("genreId");
@@ -110,7 +103,6 @@ public class MainServlet extends HttpServlet {
 				movies.close();
     			genres.close();
     			genres_in_movies.close();
-    			stars_in_movies.close();
 			}
 			out.write(jsonArray.toString());
 		} catch (Exception e) {
@@ -147,12 +139,6 @@ public class MainServlet extends HttpServlet {
 			try {
 				if (stmt3 != null)
 					stmt3.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				if (stmt5 != null)
-					stmt5.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

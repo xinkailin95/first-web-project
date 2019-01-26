@@ -73,7 +73,7 @@ public class RegisterServlet extends HttpServlet {
 		} else {
 			try {
 				conn = dataSource.getConnection();
-				String query = "SELECT * FROM user where username = ?";
+				String query = "SELECT * FROM users where username = ?";
 				stmt1 = conn.prepareStatement(query);
 				stmt1.setString(1, username);
 
@@ -84,7 +84,7 @@ public class RegisterServlet extends HttpServlet {
 					jsonObject.addProperty("message", "Username is taken!");
 					out.write(jsonObject.toString());
 				} else {
-					String sql = "insert into user(username, password) values(?, ?)";
+					String sql = "insert into users(username, password) values(?, ?)";
 					stmt2 = conn.prepareStatement(sql);
 					stmt2.setString(1, username);
 					stmt2.setString(2, password);

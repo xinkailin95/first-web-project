@@ -20,13 +20,13 @@ import com.google.gson.JsonObject;
  * Servlet implementation class singleMovie
  */
 @WebServlet(name = "/singleMovie", urlPatterns = "/api/movie")
-public class singleMovie extends HttpServlet {
+public class SingleMovie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public singleMovie() {
+	public SingleMovie() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

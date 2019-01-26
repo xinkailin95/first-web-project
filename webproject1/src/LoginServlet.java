@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
 			// Get a connection from dataSource
 			conn = dataSource.getConnection();
 			// Construct a query with parameter represented by "?"
-			String query = "SELECT * from user as s where s.username = ? and s.password = ?";
+			String query = "SELECT * from users as s where s.username = ? and s.password = ?";
 			// Declare our statement
 			stmt = conn.prepareStatement(query);
 			// Set the parameter represented by "?" in the query to the id we get from url,
