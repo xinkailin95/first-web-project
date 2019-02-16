@@ -66,7 +66,7 @@ public class LoginFilter implements Filter {
 		// TODO Auto-generated method stub
 		requestURI = requestURI.toLowerCase();
 
-		return requestURI.endsWith("index.html") || requestURI.endsWith("login.js") || requestURI.endsWith("api/login");
+		return requestURI.endsWith("index.html") || requestURI.endsWith("login.js") || requestURI.endsWith("api/login") || requestURI.endsWith("login.css");
 	}
 
 	/**
