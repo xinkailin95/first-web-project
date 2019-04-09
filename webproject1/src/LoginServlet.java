@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * Servlet implementation class SingleStarServlet
+ * Servlet implementation class LoginServlet
  */
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
